@@ -73,11 +73,11 @@ class QA_Peardoc_CoverageTest extends PHPUnit2_Framework_TestCase {
      */
     public function testGetPackageList() {
         $ar = QA_Peardoc_Coverage::getPackageList($this->strPearDir);
-        $this->assertTrue(in_array('Auth'           , $ar));
-        $this->assertTrue(in_array('LiveUser'       , $ar));
-        $this->assertTrue(in_array('System_Folders' , $ar));
-        $this->assertTrue(in_array('Selenium'       , $ar));
-        $this->assertTrue(in_array('XML_RPC'        , $ar));
+        $this->assertTrue(in_array('Auth'               , $ar));
+        $this->assertTrue(in_array('LiveUser'           , $ar));
+        $this->assertTrue(in_array('System_Folders'     , $ar));
+        $this->assertTrue(in_array('Testing_Selenium'   , $ar));
+        $this->assertTrue(in_array('XML_RPC'            , $ar));
     }
 
     /**

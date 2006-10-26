@@ -110,6 +110,12 @@ class QA_Peardoc_Coverage_Renderer_DeveloperListTest extends PHPUnit2_Framework_
             $this->strPearDir . '/Auth/package2.xml'
         );
         $this->assertEquals(1, count($ar));
+
+        //HTML_Menu didn't work
+        $ar = QA_Peardoc_Coverage_Renderer_DeveloperList::getPackageMaintainers(
+            $this->strPearDir . '/HTML_Menu/package.xml'
+        );
+        $this->assertEquals(2, count($ar));
     }
 }
 

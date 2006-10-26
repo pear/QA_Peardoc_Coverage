@@ -200,7 +200,6 @@ class QA_Peardoc_Coverage_Renderer_DeveloperList implements QA_Peardoc_Coverage_
 
         $doc = new DOMDocument();
         if (!@$doc->load($strPackageXmlPath)) {
-//            echo "BAD: " . $strPackageXmlPath . "\n";
             return array();
             throw new Exception('Package xml is broken: ' . $strPackageXmlPath);
         }
@@ -222,7 +221,7 @@ class QA_Peardoc_Coverage_Renderer_DeveloperList implements QA_Peardoc_Coverage_
 
         if ($strVersion == '1.0') {
             //get maintainers
-            $maintainers = $xpath->query('/package/maintainers/maintainer');
+            $maintainers = $pack->getElementsByTagName('maintainer');
             foreach ($maintainers as $maintainer) {
                 $strUsername = $maintainer->getElementsByTagName('user')->item(0)->textContent;
                 $strRealname = $maintainer->getElementsByTagName('name')->item(0)->textContent;
