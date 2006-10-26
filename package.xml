@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package version="2.0" xmlns="http://pear.php.net/dtd/package-2.0"
+    xmlns:tasks="http://pear.php.net/dtd/tasks-1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+http://pear.php.net/dtd/tasks-1.0.xsd
+http://pear.php.net/dtd/package-2.0
+http://pear.php.net/dtd/package-2.0.xsd">
+
+ <name>QA_Peardoc_Coverage</name>
+ <channel>pear.php.net</channel>
+ <summary>PEAR documentation coverage analysis.</summary>
+ <description>
+  Takes the PEAR documentation CVS and the PEAR package CVS directories,
+  and compares which packages have been documented.
+  Also checks which classes and methods have been documented,
+  and generates HTML reports.
+ </description>
+
+ <lead>
+  <name>Christian Weiske</name>
+  <user>cweiske</user>
+  <email>cweiske@php.net</email>
+  <active>yes</active>
+ </lead>
+
+ <date>2006-10-19</date>
+
+ <version>
+  <release>0.2.0</release>
+  <api>0.2.0</api>
+ </version>
+
+ <stability>
+  <release>beta</release>
+  <api>beta</api>
+ </stability>
+ <license uri="http://www.gnu.org/licenses/lgpl.html">LGPL</license>
+
+ <notes>
+  First version
+ </notes>
+
+ <contents>
+  <dir name="/" baseinstalldir="/">
+   <dir name="QA">
+    <dir name="Peardoc">
+     <file name="Coverage.php" role="php"/>
+     <dir name="Coverage">
+      <file name="ClassList.php" role="php"/>
+      <file name="MethodList.php" role="php"/>
+      <file name="Renderer.php" role="php"/>
+      <dir name="Renderer">
+       <file name="DeveloperList.php" role="php"/>
+       <file name="ExtendetPackageList.php" role="php"/>
+       <file name="MissingDocsPerDeveloper.php" role="php"/>
+       <file name="SimplePackageList.php" role="php"/>
+      </dir>
+     </dir>
+    </dir>
+   </dir>
+   <dir name="examples">
+    <file name="displayMissing.php" role="doc"/>
+    <file name="genData.php" role="doc"/>
+    <file name="genDeveloperStats.php" role="doc"/>
+    <file name="genExtendetStats.php" role="doc"/>
+    <file name="genMissingDocsPerDeveloper.php" role="doc"/>
+    <file name="genSimpleStats.php" role="doc"/>
+    <file name="gtk2VardumpData.php" role="doc"/>
+   </dir>
+   <dir name="tests">
+    <file name="config.php" role="test"/>
+    <file name="QA_Peardoc_CoverageTest.php" role="test"/>
+    <file name="QA_Peardoc_Coverage_ClassListTest.php" role="test"/>
+    <file name="QA_Peardoc_Coverage_MethodListTest.php" role="test"/>
+    <file name="QA_Peardoc_Coverage_Renderer_DeveloperListTest.php" role="test"/>
+    <file name="QA_Peardoc_Coverage_Renderer_SimpleClassListTest.php" role="test"/>
+   </dir>
+  </dir>
+ </contents>
+
+ <dependencies>
+  <required>
+   <php>
+    <min>5.1</min>
+    <max>5.999.999</max>
+   </php>
+   <pearinstaller>
+    <min>1.4.1</min>
+   </pearinstaller>
+  </required>
+ </dependencies>
+
+ <phprelease/>
+
+ <changelog>
+  <release>
+   <version>
+    <release>0.1.0</release>
+    <api>0.1.0</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2006-10-18</date>
+   <license uri="http://www.gnu.org/licenses/lgpl.html">LGPL</license>
+   <notes>
+    First version
+   </notes>
+  </release>
+ </changelog>
+
+</package>
