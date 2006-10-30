@@ -97,6 +97,19 @@ class QA_Peardoc_Coverage_ClassListTest extends PHPUnit2_Framework_TestCase {
         $this->assertTrue(in_array('MDB2_Module_Common'     , $ar2));
     }//public function testMDB2()
 
+
+
+    public function testNetWifi()
+    {
+        $strNetWifiDir = $this->strPearDir . '/Net_Wifi';
+        $this->assertTrue(file_exists($strNetWifiDir));
+        $ar = QA_Peardoc_Coverage_ClassList::getFileList($strNetWifiDir, false);
+
+        $this->assertNotEquals(0, count($ar));
+        $this->assertTrue(in_array('Net/Wifi.php', $ar));
+        $this->assertTrue(in_array('Net/Wifi/Cell.php', $ar));
+        $this->assertTrue(in_array('Net/Wifi/Config.php', $ar));
+    }//public function testNetWifi()
 }
 
 // Call QA_Peardoc_Coverage_ClassListTest::main() if this source file is executed directly.

@@ -432,7 +432,6 @@ class QA_Peardoc_Coverage
             $strClassDocId = $strBaseId . '.' . strtolower(str_replace('_', '-', $strClassName));
 
             if (!isset($arDocClasses[$strClassName]) && !$this->existsId($strClassDocId)) {
-                //FIXME: if classname is the same as package name -> short version
                 //class is not documented
                 $arDoc[$strClassName] = null;
                 continue;
@@ -442,6 +441,8 @@ class QA_Peardoc_Coverage
             foreach ($baseElement->getElementsByTagName('function') as $funcElement) {
                 $arDocMethods[$funcElement->nodeValue] = true;
             }
+
+            $arDoc[$strClassName] = array();
 
             //check if methods exist
             foreach ($arMethods as $strMethod => $bDocBlock) {
