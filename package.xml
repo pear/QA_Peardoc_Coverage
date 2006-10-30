@@ -24,11 +24,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <active>yes</active>
  </lead>
 
- <date>2006-10-19</date>
+ <date>2006-10-30</date>
 
  <version>
-  <release>0.2.0</release>
-  <api>0.2.0</api>
+  <release>0.3.0</release>
+  <api>0.3.0</api>
  </version>
 
  <stability>
@@ -38,7 +38,13 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="http://www.gnu.org/licenses/lgpl.html">LGPL</license>
 
  <notes>
-  First version
+  - Detect classes and methods via &lt;classname&gt; and
+  &lt;function&gt; tags.
+  - Some bugfixes
+  - More test cases
+  - Multiple classes per file detected
+  - AllTests.php file for automatic unit tests
+  - package.xml xpath problems solved
  </notes>
 
  <contents>
@@ -74,7 +80,6 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <file name="QA_Peardoc_Coverage_ClassListTest.php" role="test"/>
     <file name="QA_Peardoc_Coverage_MethodListTest.php" role="test"/>
     <file name="QA_Peardoc_Coverage_Renderer_DeveloperListTest.php" role="test"/>
-    <file name="QA_Peardoc_Coverage_Renderer_SimpleClassListTest.php" role="test"/>
    </dir>
   </dir>
  </contents>
@@ -94,6 +99,28 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <phprelease/>
 
  <changelog>
+  <release>
+   <version>
+    <release>0.3.0</release>
+    <api>0.3.0</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2006-10-30</date>
+   <license uri="http://www.gnu.org/licenses/lgpl.html">LGPL</license>
+   <notes>
+  - Detect classes and methods via &lt;classname&gt; and
+  &lt;function&gt; tags.
+  - Some bugfixes
+  - More test cases
+  - Multiple classes per file detected
+  - AllTests.php file for automatic unit tests
+  - package.xml xpath problems solved
+   </notes>
+  </release>
+
   <release>
    <version>
     <release>0.1.0</release>
