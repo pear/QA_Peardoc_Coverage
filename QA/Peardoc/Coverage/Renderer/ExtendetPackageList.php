@@ -95,7 +95,7 @@ class QA_Peardoc_Coverage_Renderer_ExtendetPackageList implements QA_Peardoc_Cov
                 ++$nPackages;
 
                 $out .= '<tr><td colspan="2">'
-                     . '<a href="http://pear.php.net/package/' . $strPackageName . '">'
+                     . '<a href="http://pear.php.net/package/' . $strPackageName . '" name="' . $strPackageName . '">'
                      . $strPackageName
                      . '</a>'
                      . '</td>';
