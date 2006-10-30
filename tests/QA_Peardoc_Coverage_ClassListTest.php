@@ -67,6 +67,18 @@ class QA_Peardoc_Coverage_ClassListTest extends PHPUnit2_Framework_TestCase {
         $this->assertFalse(in_array('tests/DBContainer.php', $ar));
     }//public function testAuth()
 
+
+
+    public function testMDB2()
+    {
+        $strMdb2Dir = $this->strPearDir . '/MDB2';
+        $this->assertTrue(file_exists($strMdb2Dir));
+        $ar = QA_Peardoc_Coverage_ClassList::getClassList($strMdb2Dir, false);
+
+        $this->assertNotEquals(0, count($ar));
+        $this->assertTrue(in_array('MDB2.php', $ar));
+    }
+
 }
 
 // Call QA_Peardoc_Coverage_ClassListTest::main() if this source file is executed directly.

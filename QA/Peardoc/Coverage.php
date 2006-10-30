@@ -381,6 +381,15 @@ class QA_Peardoc_Coverage
     /**
     *   Creates the documentation coverage for the given package.
     *
+    *   A class is considered documented if either an ID
+    *   /baseid + "." + classname/ exists, or the classname
+    *   is surrounded by <classname> tags at least once.
+    *
+    *   Functions/methds are considered as documented if
+    *   they are mentioned inside a <function> tag or
+    *   an id like /baseid + "." + classname + "." + functionname/
+    *   exists.
+    *
     *   @param string   $strPackage     Package name
     *   @param string   $strCategory    Category (lowercase)
     *   @param string   $strBaseId      Base documentation id attribute
@@ -394,6 +403,13 @@ class QA_Peardoc_Coverage
             '*docid*'   => $strBaseId,
             '*package*' => $strPackageDir
         );
+
+        $baseElement = $this->doc->getElementById($strBaseId);
+        //find <classname> elements
+        $arDocClasses = array();
+        foreach ($baseElement->getElementsByTagName('classname') as $classElement) {
+            $arDocClasses[$classElement->nodeValue] = true;
+        }
 
         foreach (
             QA_Peardoc_Coverage_ClassList::getClassList($strPackageDir)
@@ -409,16 +425,34 @@ class QA_Peardoc_Coverage
             //Check if class is documented
             $strClassDocId = $strBaseId . '.' . strtolower(str_replace('_', '-', $strClassName));
 
-            if (!$this->existsId($strClassDocId)) {
+            if (!isset($arDocClasses[$strClassName]) && !$this->existsId($strClassDocId)) {
                 //FIXME: if classname is the same as package name -> short version
                 //class is not documented
                 $arDoc[$strClassName] = null;
                 continue;
             }
 
+            $arDocMethods = array();
+            foreach ($baseElement->getElementsByTagName('function') as $funcElement) {
+                $arDocMethods[$funcElement->nodeValue] = true;
+            }
+
+            //check if methods exist
             foreach ($arMethods as $strMethod => $bDocBlock) {
-                $strMethodDocId = $strClassDocId . '.' . strtolower(str_replace('_', '-', $strMethod));
-                $arDoc[$strClassName][$strMethod] = $this->existsId($strMethodDocId);
+                //omit constructors
+                if ($strMethod == $strClassName || $strMethod == '__construct') {
+                    continue;
+                }
+
+                if (isset($arDocMethods[$strMethod])) {
+                    //first check if the method is in a <function> tag
+                    $arDoc[$strClassName][$strMethod] = true;
+                } else {
+                    //then check if the method has its own section
+                    $strMethodDocId = $strClassDocId . '.' . strtolower(str_replace('_', '-', $strMethod));
+
+                    $arDoc[$strClassName][$strMethod] = $this->existsId($strMethodDocId);
+                }
             }//foreach method
 
         }//foreach class
