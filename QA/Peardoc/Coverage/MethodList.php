@@ -1,4 +1,5 @@
 <?php
+require_once 'QA/Peardoc/Coverage/ClassList.php';
 
 /**
 *   Returns a method list for the class
@@ -9,11 +10,11 @@
 class QA_Peardoc_Coverage_MethodList
 {
     /**
-    *   Returns a method list for the class
+    *   Returns a class => method list for the classes
     *   defined in the given filename.
     *
     *   @param string $strClassFile     Path of a .php file to load
-    *   @return array   Array with classname and methods
+    *   @return array   Array with classname => methods => bool array
     */
     public static function getMethods($strClassFile)
     {
@@ -21,15 +22,16 @@ class QA_Peardoc_Coverage_MethodList
             throw new Exception('File does not exist: ' . $strClassFile);
         }
 
-        $strClassName = self::getClassnameFromFilename($strClassFile);
+        $arClassnames = QA_Peardoc_Coverage_ClassList::getClassnamesFromFilename($strClassFile);
 
-        if ($strClassName === false) {
-            return false;
+        if (count($arClassnames) == 0) {
+            return array();
         }
 
         $bWaitForClassname  = false;
         $bWaitForMethodname = false;
         $arMethods          = array();
+        $strClassName       = '*funcs*';
         foreach (
             token_get_all(
                 file_get_contents($strClassFile)
@@ -43,42 +45,23 @@ class QA_Peardoc_Coverage_MethodList
                 } else if ($nId == T_FUNCTION) {
                     $bWaitForMethodname = true;
                 } else if ($bWaitForClassname && $nId == T_STRING) {
+                    //classname found
                     $strClassName = $strText;
+                    $arMethods[$strClassName] = array();
                     $bWaitForClassname = false;
                 } else if ($bWaitForMethodname && $nId == T_STRING) {
+                    //methodname found
                     $strMethodname = $strText;
                     //FIXME: check if docblock
                     //FIXME: use public methods only
-                    $arMethods[$strMethodname] = false;
+                    $arMethods[$strClassName][$strMethodname] = false;
                     $bWaitForMethodname = false;
                 }
             }
         }
 
-        return array($strClassName, $arMethods);
+        return $arMethods;
     }//public static function getMethods($strClassFile)
-
-
-
-    /**
-    *   Tries to guess a classname from a given filename
-    *
-    *   @param string $strClassFile     .php filename
-    *   @return string  Class name OR false if no class found
-    */
-    public static function getClassnameFromFilename($strClassFile)
-    {
-        //simple: open file and search for "class classname"
-        $strContent = file_get_contents($strClassFile);
-
-        if (preg_match('/' . "(?:\r|\n)" . '\\s*(?:abstract\\s+)?(?:final\\s+)?(?:[Cc]lass|interface)\\s+([A-Za-z0-9_]+)/', $strContent, $arMatches)) {
-            return $arMatches[1];
-        } else {
-            //no match?
-            //throw new Exception('No classname in ' . $strClassFile);
-            return false;
-        }
-    }//public static function getClassnameFromFilename($strClassFile)
 
 }//class QA_Peardoc_Coverage_MethodList
 ?>

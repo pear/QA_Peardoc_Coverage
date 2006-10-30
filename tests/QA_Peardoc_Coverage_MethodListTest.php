@@ -11,6 +11,7 @@ require_once "PHPUnit2/Framework/TestSuite.php";
 require_once "PHPUnit2/Framework/IncompleteTestError.php";
 
 require_once "QA/Peardoc/Coverage/MethodList.php";
+require_once dirname(__FILE__) . '/config.php';
 
 /**
  * Test class for QA_Peardoc_Coverage_MethodList.
@@ -37,6 +38,9 @@ class QA_Peardoc_Coverage_MethodListTest extends PHPUnit2_Framework_TestCase {
      * @access protected
      */
     protected function setUp() {
+        $this->strPearDir = $GLOBALS['testConfig']['PearDir'];
+        $this->assertTrue(file_exists($this->strPearDir));
+        $this->assertTrue(is_dir($this->strPearDir));
     }
 
     /**
@@ -49,19 +53,57 @@ class QA_Peardoc_Coverage_MethodListTest extends PHPUnit2_Framework_TestCase {
     }
 
     /**
-     * @todo Implement testGetMethods().
+     *
      */
-    public function testGetMethods() {
-        // Remove the following line when you implement this test.
-        throw new PHPUnit2_Framework_IncompleteTestError;
+    public function testGetMethodsAuth() {
+        $strAuthDir = $this->strPearDir . '/Auth';
+        $strAuthFile = $strAuthDir . '/Auth.php';
+        $this->assertTrue(file_exists($strAuthFile));
+
+        $ar = QA_Peardoc_Coverage_MethodList::getMethods($strAuthFile);
+        $this->assertTrue(isset($ar['Auth']));
+        $this->assertTrue(isset($ar['Auth']['Auth']));
+        $this->assertTrue(isset($ar['Auth']['applyAuthOptions']));
+        $this->assertTrue(isset($ar['Auth']['_loadStorage']));
     }
 
     /**
-     * @todo Implement testGetClassnameFromFilename().
+     *
      */
-    public function testGetClassnameFromFilename() {
-        // Remove the following line when you implement this test.
-        throw new PHPUnit2_Framework_IncompleteTestError;
+    public function testGetMethodsMDB2() {
+        $strMdb2Dir = $this->strPearDir . '/MDB2';
+        $strMdb2File = $strMdb2Dir. '/MDB2.php';
+        $this->assertTrue(file_exists($strMdb2File));
+
+        $ar = QA_Peardoc_Coverage_MethodList::getMethods($strMdb2File);
+        $this->assertTrue(isset($ar['MDB2']));
+        $this->assertTrue(isset($ar['MDB2_Error']));
+        $this->assertTrue(isset($ar['MDB2_Driver_Common']));
+        $this->assertTrue(isset($ar['MDB2_Result']));
+        $this->assertTrue(isset($ar['MDB2_Result_Common']));
+        $this->assertTrue(isset($ar['MDB2_Row']));
+        $this->assertTrue(isset($ar['MDB2_Statement_Common']));
+        $this->assertTrue(isset($ar['MDB2_Module_Common']));
+
+        $this->assertTrue(isset($ar['MDB2']['setOptions']));
+        $this->assertTrue(isset($ar['MDB2']['classExists']));
+        $this->assertTrue(isset($ar['MDB2']['loadClass']));
+        $this->assertTrue(isset($ar['MDB2']['factory']));
+        $this->assertTrue(isset($ar['MDB2']['connect']));
+        $this->assertTrue(isset($ar['MDB2']['singleton']));
+
+        $this->assertTrue(isset($ar['MDB2_Error']['MDB2_Error']));
+        $this->assertTrue(isset($ar['MDB2_Error']['MDB2_Error']));
+
+        $this->assertTrue(isset($ar['MDB2_Driver_Common']['__construct']));
+        $this->assertTrue(isset($ar['MDB2_Driver_Common']['__destruct']));
+        $this->assertTrue(isset($ar['MDB2_Driver_Common']['MDB2_Driver_Common']));
+        $this->assertTrue(isset($ar['MDB2_Driver_Common']['free']));
+        $this->assertTrue(isset($ar['MDB2_Driver_Common']['errorInfo']));
+
+        $this->assertTrue(isset($ar['MDB2_Result_Common']['seek']));
+        $this->assertTrue(isset($ar['MDB2_Result_Common']['fetchRow']));
+        $this->assertTrue(isset($ar['MDB2_Result_Common']['fetchOne']));
     }
 }
 

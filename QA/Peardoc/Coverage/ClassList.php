@@ -109,7 +109,7 @@ class QA_Peardoc_Coverage_Classlist
     *                                        (or relative to package dir)
     *   @return array   Array with absolute file paths
     */
-    public static function getClassList($strPackageDir, $bAbsolute = true)
+    public static function getFileList($strPackageDir, $bAbsolute = true)
     {
         if (!file_exists($strPackageDir) || !is_dir($strPackageDir)) {
             throw new Exception("Package directory does not exist: " . $strPackageDir);
@@ -138,7 +138,27 @@ class QA_Peardoc_Coverage_Classlist
         chdir($strPath);
 
         return $arFiles;
-    }//public static function getClassList($strPackageDir, $bAbsolute = true)
+    }//public static function getFileList($strPackageDir, $bAbsolute = true)
+
+
+
+    /**
+    *   Tries to find classnames in a given file
+    *
+    *   @param string $strClassFile     .php filename
+    *   @return array   Array of classnames defined in the file
+    */
+    public static function getClassnamesFromFilename($strClassFile)
+    {
+        //simple: open file and search for "class classname"
+        $strContent = file_get_contents($strClassFile);
+
+        if (preg_match_all('/' . "(?:\r|\n)" . '\\s*(?:abstract\\s+)?(?:final\\s+)?(?:[Cc]lass|interface)\\s+([A-Za-z0-9_]+)/', $strContent, $arMatches)) {
+            return $arMatches[1];
+        } else {
+            return array();
+        }
+    }//public static function getClassnamesFromFilename($strClassFile)
 
 }//class QA_Peardoc_Coverage_Classlist
 ?>

@@ -103,7 +103,7 @@ class QA_Peardoc_Coverage_Renderer_ExtendetPackageList implements QA_Peardoc_Cov
                     //not documented
                     $out .= '<td style="background-color:'
                          . self::$colNotDocumented
-                         . '">not documented</td></tr>' . $n;
+                         . '">undocumented</td></tr>' . $n;
                 } else {
                     //documented
                     ++$nDoccedPackages;
@@ -163,7 +163,7 @@ class QA_Peardoc_Coverage_Renderer_ExtendetPackageList implements QA_Peardoc_Cov
                 //FIXME: display not docced
                 $out .= '<tr><td></td><td class="class">'
                     . $strClass
-                    . '</td><td style="background-color:' . self::$colMethodNotDocumented . '">poor</td></tr>' . $n;
+                    . '</td><td style="background-color:' . self::$colMethodNotDocumented. '">undocumented</td></tr>' . $n;
                 continue;
             }
 
@@ -202,10 +202,10 @@ class QA_Peardoc_Coverage_Renderer_ExtendetPackageList implements QA_Peardoc_Cov
             }
 
             if ($nMethods == $nMethodsDocced) {
-                $strState = 'perfect';
+                $strState = 'perfect (' . $nMethodsDocced . ')';
                 $col = self::$colMethodDocumented;
             } else if ($nMethodsDocced == 0) {
-                $strState = 'poor';
+                $strState = 'poor (' . $nMethods . ')';
                 $col = self::$colMethodNotDocumented;
             } else {
                 $strState = 'partly';

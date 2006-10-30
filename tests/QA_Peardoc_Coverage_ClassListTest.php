@@ -58,13 +58,20 @@ class QA_Peardoc_Coverage_ClassListTest extends PHPUnit2_Framework_TestCase {
     {
         $strAuthDir = $this->strPearDir . '/Auth';
         $this->assertTrue(file_exists($strAuthDir));
-        $ar = QA_Peardoc_Coverage_ClassList::getClassList($strAuthDir, false);
+        $ar = QA_Peardoc_Coverage_ClassList::getFileList($strAuthDir, false);
 
         $this->assertNotEquals(0, count($ar));
         $this->assertTrue(in_array('Auth.php', $ar));
         $this->assertTrue(in_array('Auth/Auth.php', $ar));
         $this->assertTrue(in_array('Container/Array.php', $ar));
         $this->assertFalse(in_array('tests/DBContainer.php', $ar));
+
+        $ar2 = QA_Peardoc_Coverage_ClassList::getClassnamesFromFilename($strAuthDir . '/Auth.php');
+        $this->assertEquals(1, count($ar2));
+        $this->assertTrue(in_array('Auth', $ar2));
+        $ar2 = QA_Peardoc_Coverage_ClassList::getClassnamesFromFilename($strAuthDir . '/Container/Array.php');
+        $this->assertEquals(1, count($ar2));
+        $this->assertTrue(in_array('Auth_Container_Array', $ar2));
     }//public function testAuth()
 
 
@@ -73,11 +80,22 @@ class QA_Peardoc_Coverage_ClassListTest extends PHPUnit2_Framework_TestCase {
     {
         $strMdb2Dir = $this->strPearDir . '/MDB2';
         $this->assertTrue(file_exists($strMdb2Dir));
-        $ar = QA_Peardoc_Coverage_ClassList::getClassList($strMdb2Dir, false);
+        $ar = QA_Peardoc_Coverage_ClassList::getFileList($strMdb2Dir, false);
 
         $this->assertNotEquals(0, count($ar));
         $this->assertTrue(in_array('MDB2.php', $ar));
-    }
+
+        $ar2 = QA_Peardoc_Coverage_ClassList::getClassnamesFromFilename($strMdb2Dir. '/MDB2.php');
+        $this->assertNotEquals(1, count($ar2));
+        $this->assertTrue(in_array('MDB2'                   , $ar2));
+        $this->assertTrue(in_array('MDB2_Error'             , $ar2));
+        $this->assertTrue(in_array('MDB2_Driver_Common'     , $ar2));
+        $this->assertTrue(in_array('MDB2_Result'            , $ar2));
+        $this->assertTrue(in_array('MDB2_Result_Common'     , $ar2));
+        $this->assertTrue(in_array('MDB2_Row'               , $ar2));
+        $this->assertTrue(in_array('MDB2_Statement_Common'  , $ar2));
+        $this->assertTrue(in_array('MDB2_Module_Common'     , $ar2));
+    }//public function testMDB2()
 
 }
 
