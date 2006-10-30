@@ -223,7 +223,7 @@ class QA_Peardoc_Coverage_Renderer_DeveloperList implements QA_Peardoc_Coverage_
             //get maintainers
             $maintainers = $pack->getElementsByTagName('maintainer');
             foreach ($maintainers as $maintainer) {
-                $strUsername = $maintainer->getElementsByTagName('user')->item(0)->textContent;
+                $strUsername = strtolower($maintainer->getElementsByTagName('user')->item(0)->textContent);
                 $strRealname = $maintainer->getElementsByTagName('name')->item(0)->textContent;
                 $strEmail    = $maintainer->getElementsByTagName('email')->item(0)->textContent;
                 $arMaintainers[$strUsername] = array(
@@ -239,7 +239,7 @@ class QA_Peardoc_Coverage_Renderer_DeveloperList implements QA_Peardoc_Coverage_
                 if ($maintainer->getElementsByTagName('active')->item(0)->textContent != 'yes') {
                     continue;
                 }
-                $strUsername = $maintainer->getElementsByTagName('user')->item(0)->textContent;
+                $strUsername = strtolower($maintainer->getElementsByTagName('user')->item(0)->textContent);
                 $strRealname = $maintainer->getElementsByTagName('name')->item(0)->textContent;
                 $strEmail    = $maintainer->getElementsByTagName('email')->item(0)->textContent;
                 $arMaintainers[$strUsername] = array(
@@ -253,7 +253,7 @@ class QA_Peardoc_Coverage_Renderer_DeveloperList implements QA_Peardoc_Coverage_
                 if ($maintainer->getElementsByTagName('active')->item(0)->textContent != 'yes') {
                     continue;
                 }
-                $strUsername = $maintainer->getElementsByTagName('user')->item(0)->textContent;
+                $strUsername = strtolower($maintainer->getElementsByTagName('user')->item(0)->textContent);
                 $strRealname = $maintainer->getElementsByTagName('name')->item(0)->textContent;
                 $strEmail    = $maintainer->getElementsByTagName('email')->item(0)->textContent;
                 $arMaintainers[$strUsername] = array(
