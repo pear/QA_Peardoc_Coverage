@@ -411,52 +411,56 @@ class QA_Peardoc_Coverage
             $arDocClasses[$classElement->nodeValue] = true;
         }
 
+        $arClasses = array();
         foreach (
             QA_Peardoc_Coverage_ClassList::getFileList($strPackageDir)
             as $strClassFile
         ) {
-            $arClasses = QA_Peardoc_Coverage_MethodList::getMethods($strClassFile);
-            if (count($arClasses) == 0) {
+            $arClasses = array_merge(
+                $arClasses,
+                QA_Peardoc_Coverage_MethodList::getMethods($strClassFile)
+            );
+        }//foreach file
+
+        ksort($arClasses);
+
+        foreach ($arClasses as $strClassName => $arMethods) {
+            if ($strClassName[0] == '*') {
                 continue;
             }
-            foreach ($arClasses as $strClassName => $arMethods) {
-                if ($strClassName[0] == '*') {
+            //Check if class is documented
+            $strClassDocId = $strBaseId . '.' . strtolower(str_replace('_', '-', $strClassName));
+
+            if (!isset($arDocClasses[$strClassName]) && !$this->existsId($strClassDocId)) {
+                //FIXME: if classname is the same as package name -> short version
+                //class is not documented
+                $arDoc[$strClassName] = null;
+                continue;
+            }
+
+            $arDocMethods = array();
+            foreach ($baseElement->getElementsByTagName('function') as $funcElement) {
+                $arDocMethods[$funcElement->nodeValue] = true;
+            }
+
+            //check if methods exist
+            foreach ($arMethods as $strMethod => $bDocBlock) {
+                //omit constructors
+                if ($strMethod == $strClassName || $strMethod == '__construct') {
                     continue;
                 }
-                //Check if class is documented
-                $strClassDocId = $strBaseId . '.' . strtolower(str_replace('_', '-', $strClassName));
 
-                if (!isset($arDocClasses[$strClassName]) && !$this->existsId($strClassDocId)) {
-                    //FIXME: if classname is the same as package name -> short version
-                    //class is not documented
-                    $arDoc[$strClassName] = null;
-                    continue;
+                if (isset($arDocMethods[$strMethod])) {
+                    //first check if the method is in a <function> tag
+                    $arDoc[$strClassName][$strMethod] = true;
+                } else {
+                    //then check if the method has its own section
+                    $strMethodDocId = $strClassDocId . '.' . strtolower(str_replace('_', '-', $strMethod));
+
+                    $arDoc[$strClassName][$strMethod] = $this->existsId($strMethodDocId);
                 }
-
-                $arDocMethods = array();
-                foreach ($baseElement->getElementsByTagName('function') as $funcElement) {
-                    $arDocMethods[$funcElement->nodeValue] = true;
-                }
-
-                //check if methods exist
-                foreach ($arMethods as $strMethod => $bDocBlock) {
-                    //omit constructors
-                    if ($strMethod == $strClassName || $strMethod == '__construct') {
-                        continue;
-                    }
-
-                    if (isset($arDocMethods[$strMethod])) {
-                        //first check if the method is in a <function> tag
-                        $arDoc[$strClassName][$strMethod] = true;
-                    } else {
-                        //then check if the method has its own section
-                        $strMethodDocId = $strClassDocId . '.' . strtolower(str_replace('_', '-', $strMethod));
-
-                        $arDoc[$strClassName][$strMethod] = $this->existsId($strMethodDocId);
-                    }
-                }//foreach method
-            }//foreach class
-        }//foreach file
+            }//foreach method
+        }//foreach class
 
         return $arDoc;
     }//public function getPackageCoverage($strPackage, $strCategory, $strBaseId, $strPackageDir)
