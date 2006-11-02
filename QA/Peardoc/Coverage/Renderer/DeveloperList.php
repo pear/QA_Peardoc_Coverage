@@ -33,7 +33,7 @@ class QA_Peardoc_Coverage_Renderer_DeveloperList implements QA_Peardoc_Coverage_
             return '#0F0';
         } else if ($flNumber >= 0.9) {
             return '#dfff00';
-        } else if ($flNumber >= 0.5) {
+        } else if ($flNumber >= 0.6) {
             return '#FF0';
         } else if ($flNumber >= 0.3) {
             return '#F70';
@@ -76,6 +76,7 @@ class QA_Peardoc_Coverage_Renderer_DeveloperList implements QA_Peardoc_Coverage_
 
         $nPlace = 0;
         $nNextNumber = 101;
+        $arCounter = array();
         reset(self::$arLevels);
 
         foreach ($arMaintainers as $strUsername => $arMaintainer) {
@@ -101,6 +102,12 @@ class QA_Peardoc_Coverage_Renderer_DeveloperList implements QA_Peardoc_Coverage_
                 }
             }
 
+            if (!isset($arCounter[$strLevel])) {
+                $arCounter[$strLevel] = 0;
+            } else {
+                $arCounter[$strLevel]++;
+            }
+
             $out .= '<tr>'
                 . '<td>' . ++$nPlace . '</td>'
                 . '<td><a href="http://pear.php.net/user/' . $strUsername . '">' . $strUsername . '</a></td>'
@@ -115,9 +122,23 @@ class QA_Peardoc_Coverage_Renderer_DeveloperList implements QA_Peardoc_Coverage_
 
         $out .= '</table>' . $n;
 
+        //now statistics
+        $out .= '<table border="1"><caption>Statistics</caption>' . $n
+            . '<thead><tr><th>Level</th><th># devs</th><th>Percent</th></tr></thead>'
+            . '<tfoot><tr><th>Sum</th><td>' . count($arMaintainers) . '</td><td>100%</td></tr></tfoot>'
+            . '<tbody>';
+        foreach ($arCounter as $strLevel => $nDevs) {
+            $out .= '<tr>'
+                . '<td>' . $strLevel . '</td>'
+                . '<td>' . $nDevs . '</td>'
+                . '<td>' . number_format(100 / count($arMaintainers) * $nDevs, 2) . '%</td>'
+                . '</tr>' . $n;
+        }
+        $out .= '</tbody></table>' . $n;
+
 
         $out .= '</body></html>';
-
+//return '';
         return $out;
     }//public function render($arDoc)
 
