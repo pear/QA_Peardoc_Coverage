@@ -15,7 +15,7 @@ class QA_Peardoc_Coverage_Renderer_DeveloperList implements QA_Peardoc_Coverage_
     public static $arLevels = array(
         100 => 'Well done',
          90 => 'Not bad',
-         50 => 'Should be better',
+         60 => 'Should be better',
          30 => 'Shame on you'
     );
 
