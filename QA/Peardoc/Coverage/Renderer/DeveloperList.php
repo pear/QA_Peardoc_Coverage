@@ -80,6 +80,10 @@ class QA_Peardoc_Coverage_Renderer_DeveloperList implements QA_Peardoc_Coverage_
         reset(self::$arLevels);
 
         foreach ($arMaintainers as $strUsername => $arMaintainer) {
+            if ($strUsername == '???' || $strUsername == '') {
+                continue;
+            }
+
             $num = $arMaintainer['docced'] / $arMaintainer['packages'];
             $glatt = intval($num * 100);
 
@@ -110,7 +114,7 @@ class QA_Peardoc_Coverage_Renderer_DeveloperList implements QA_Peardoc_Coverage_
 
             $out .= '<tr>'
                 . '<td>' . ++$nPlace . '</td>'
-                . '<td><a href="http://pear.php.net/user/' . $strUsername . '">' . $strUsername . '</a></td>'
+                . '<td><a href="http://pear.php.net/user/' . $strUsername . '" name="' . $strUsername . '">' . $strUsername . '</a></td>'
                 . '<td>' . $arMaintainer['docced'] . '</td>'
                 . '<td>' . $arMaintainer['packages'] . '</td>'
                 . '<td style="background-color:' . self::getColor($num) . '">'

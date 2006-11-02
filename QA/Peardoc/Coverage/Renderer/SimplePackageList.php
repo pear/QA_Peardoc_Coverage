@@ -86,7 +86,7 @@ class QA_Peardoc_Coverage_Renderer_SimplePackageList implements QA_Peardoc_Cover
                 ++$nPackages;
 
                 $out .= '<tr><td></td><td>'
-                     . '<a href="http://pear.php.net/package/' . $strPackageName . '">'
+                     . '<a href="http://pear.php.net/package/' . $strPackageName . '" name="' . $strPackageName . '">'
                      . $strPackageName
                      . '</a>'
                      . '</td>';
