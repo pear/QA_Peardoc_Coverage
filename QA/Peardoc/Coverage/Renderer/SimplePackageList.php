@@ -1,6 +1,5 @@
 <?php
 require_once 'QA/Peardoc/Coverage/Renderer.php';
-require_once 'HTML/Table.php';
 
 /**
 *   Renders the coverage result in a simple

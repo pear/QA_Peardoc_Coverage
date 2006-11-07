@@ -1,7 +1,6 @@
 <?php
 require_once 'QA/Peardoc/Coverage/Renderer.php';
 require_once 'QA/Peardoc/Coverage/Renderer/DeveloperList.php';
-require_once 'HTML/Table.php';
 
 /**
 *   Creates the serialized output of an array
