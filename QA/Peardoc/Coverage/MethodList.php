@@ -20,6 +20,8 @@ class QA_Peardoc_Coverage_MethodList
     {
         if (!file_exists($strClassFile)) {
             throw new Exception('File does not exist: ' . $strClassFile);
+        } else if (!function_exists('token_get_all')) {
+            throw new Exception('Please compile php with tokenizer enabled.');
         }
 
         $arClassnames = QA_Peardoc_Coverage_ClassList::getClassnamesFromFilename($strClassFile);
