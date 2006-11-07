@@ -24,11 +24,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <active>yes</active>
  </lead>
 
- <date>2006-10-30</date>
+ <date>2006-11-07</date>
 
  <version>
-  <release>0.3.0</release>
-  <api>0.3.0</api>
+  <release>0.4.0</release>
+  <api>0.4.0</api>
  </version>
 
  <stability>
@@ -38,13 +38,11 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="http://www.gnu.org/licenses/lgpl.html">LGPL</license>
 
  <notes>
-  - Detect classes and methods via &lt;classname&gt; and
-  &lt;function&gt; tags.
-  - Some bugfixes
-  - More test cases
-  - Multiple classes per file detected
-  - AllTests.php file for automatic unit tests
-  - package.xml xpath problems solved
+  - Check if tokenizer is enabled
+  - Removing unused HTML_Table dependency
+  - Added sendMails.php example that sends out reminder mails
+  - Anchors in all HTML pages
+  - Show classes without methods
  </notes>
 
  <contents>
@@ -73,6 +71,7 @@ http://pear.php.net/dtd/package-2.0.xsd">
     <file name="genMissingDocsPerDeveloper.php" role="doc"/>
     <file name="genSimpleStats.php" role="doc"/>
     <file name="gtk2VardumpData.php" role="doc"/>
+    <file name="sendMails.php" role="doc"/>
    </dir>
    <dir name="tests">
     <file name="config.php" role="test"/>
@@ -99,6 +98,26 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <phprelease/>
 
  <changelog>
+  <release>
+   <version>
+    <release>0.4.0</release>
+    <api>0.4.0</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <date>2006-11-07</date>
+   <license uri="http://www.gnu.org/licenses/lgpl.html">LGPL</license>
+   <notes>
+  - Check if tokenizer is enabled
+  - Removing unused HTML_Table dependency
+  - Added sendMails.php example that sends out reminder mails
+  - Anchors in all HTML pages
+  - Show classes without methods
+   </notes>
+  </release>
+
   <release>
    <version>
     <release>0.3.0</release>
