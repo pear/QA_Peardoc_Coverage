@@ -60,7 +60,7 @@ class QA_Peardoc_Coverage_Renderer_DeveloperList implements QA_Peardoc_Coverage_
         $out .= '<html><head><title>PEAR Documentation coverage by developer</title></head><body>';
         $out .= '<table border="1"><caption>'
             . 'PEAR documentation coverage by developer '
-            . date('Y-m-d H:i:s')
+            . date('Y-m-d H:i:s', $arDoc['*date*'])
             . '</caption>' . $n;
 
 
@@ -168,6 +168,8 @@ class QA_Peardoc_Coverage_Renderer_DeveloperList implements QA_Peardoc_Coverage_
     {
         $arMaintainers = array();
         foreach ($arDoc as $strCategory => &$arPackages) {
+            if ($strCategory[0] == '*') { continue; }
+
             foreach ($arPackages as $strPackageName => &$arPackage) {
                 $strPath = $arPackage['*package*'];
                 $strV1 = $strPath . '/package.xml';

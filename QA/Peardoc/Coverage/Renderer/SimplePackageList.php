@@ -67,7 +67,7 @@ class QA_Peardoc_Coverage_Renderer_SimplePackageList implements QA_Peardoc_Cover
         $out .= '<html><head><title>Simple PEAR Documentation coverage analysis</title></head><body>';
         $out .= '<table border="1"><caption>'
             . 'Simple PEAR Documentation coverage analysis as of '
-            . date('Y-m-d H:i:s')
+            . date('Y-m-d H:i:s', $arDoc['*date*'])
             . '</caption>' . $n;
 
         $nPackages       = 0;
@@ -75,6 +75,8 @@ class QA_Peardoc_Coverage_Renderer_SimplePackageList implements QA_Peardoc_Cover
         $nCategories     = 0;
 
         foreach ($arDoc as $strCategory => $arCategoryPackages) {
+            if ($strCategory[0] == '*') { continue; }
+
             $out .= '<tr><th colspan="3">' . ucfirst($strCategory) . '</th></tr>' . $n;
             ++$nCategories;
             $nCategoryPackages       = 0;

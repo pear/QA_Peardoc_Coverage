@@ -204,6 +204,8 @@ class QA_Peardoc_Coverage
             ksort($arPackages);
         }
 
+        $arDoc['*date*'] = time();
+
         return $arDoc;
     }//public function generateCoverage()
 
