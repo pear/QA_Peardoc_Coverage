@@ -24,25 +24,22 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <active>yes</active>
  </lead>
 
- <date>2006-11-07</date>
+ <date>2007-04-15</date>
 
  <version>
-  <release>0.4.0</release>
-  <api>0.4.0</api>
+  <release>1.0.0</release>
+  <api>1.0.0</api>
  </version>
 
  <stability>
-  <release>beta</release>
-  <api>beta</api>
+  <release>stable</release>
+  <api>stable</api>
  </stability>
  <license uri="http://www.gnu.org/licenses/lgpl.html">LGPL</license>
 
  <notes>
-  - Check if tokenizer is enabled
-  - Removing unused HTML_Table dependency
-  - Added sendMails.php example that sends out reminder mails
-  - Anchors in all HTML pages
-  - Show classes without methods
+  - Marking stable
+  - Fixing bug #10732: date of generation should be date of data generation
  </notes>
 
  <contents>
@@ -99,6 +96,23 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <phprelease/>
 
  <changelog>
+  <release>
+   <version>
+    <release>1.0.0</release>
+    <api>1.0.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2007-04-15</date>
+   <license uri="http://www.gnu.org/licenses/lgpl.html">LGPL</license>
+   <notes>
+  - Marking stable
+  - Fixing bug #10732: date of generation should be date of data generation
+   </notes>
+  </release>
+
   <release>
    <version>
     <release>0.4.0</release>
