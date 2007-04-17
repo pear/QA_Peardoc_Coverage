@@ -344,7 +344,9 @@ class QA_Peardoc_Coverage
     public function getPackageDocId($strPackage, $strCategory)
     {
         $strCategory       = strtolower($strCategory);
+        //gtk2-entrydialog
         $strPackageIdName  = strtolower(str_replace('_', '-', $strPackage));
+        //entrydialog
         $strPackageIdName2 = strtolower(str_replace('_', '-',
                                     substr(
                                         $strPackage,
@@ -436,6 +438,11 @@ class QA_Peardoc_Coverage
             }
             //Check if class is documented
             $strClassDocId = $strBaseId . '.' . strtolower(str_replace('_', '-', $strClassName));
+            if ($strClassName == $strPackage) {
+                $strClassDocId2 = $strBaseId;
+            } else {
+                $strClassDocId2 = null;
+            }
 
             if (!isset($arDocClasses[$strClassName]) && !$this->existsId($strClassDocId)) {
                 //class is not documented
@@ -464,7 +471,16 @@ class QA_Peardoc_Coverage
                     //then check if the method has its own section
                     $strMethodDocId = $strClassDocId . '.' . strtolower(str_replace('_', '-', $strMethod));
 
-                    $arDoc[$strClassName][$strMethod] = $this->existsId($strMethodDocId);
+                    if (!$this->existsId($strMethodDocId)) {
+                        $strMethodDocId2 = $strClassDocId2 . '.' . strtolower(str_replace('_', '-', $strMethod));
+                        if ($strClassDocId2 !== null && $this->existsId($strMethodDocId2)) {
+                            $arDoc[$strClassName][$strMethod] = true;
+                        } else {
+                            $arDoc[$strClassName][$strMethod] = false;
+                        }
+                    } else {
+                        $arDoc[$strClassName][$strMethod] = true;
+                    }
                 }
             }//foreach method
         }//foreach class
