@@ -24,10 +24,10 @@ http://pear.php.net/dtd/package-2.0.xsd">
   <active>yes</active>
  </lead>
 
- <date>2007-04-15</date>
+ <date>2007-04-17</date>
 
  <version>
-  <release>1.0.0</release>
+  <release>1.0.1</release>
   <api>1.0.0</api>
  </version>
 
@@ -38,8 +38,8 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <license uri="http://www.gnu.org/licenses/lgpl.html">LGPL</license>
 
  <notes>
-  - Marking stable
-  - Fixing bug #10732: date of generation should be date of data generation
+ * Fix Bug #10738: File_HtAccess has methods documented but not shown in analysis [cweiske]
+ * Implement Feature #10739: Add list with directories to ignore [cweiske]
  </notes>
 
  <contents>
@@ -96,6 +96,23 @@ http://pear.php.net/dtd/package-2.0.xsd">
  <phprelease/>
 
  <changelog>
+  <release>
+   <version>
+    <release>1.0.1</release>
+    <api>1.0.1</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2007-04-17</date>
+   <license uri="http://www.gnu.org/licenses/lgpl.html">LGPL</license>
+   <notes>
+ * Fix Bug #10738: File_HtAccess has methods documented but not shown in analysis [cweiske]
+ * Implement Feature #10739: Add list with directories to ignore [cweiske]
+   </notes>
+  </release>
+
   <release>
    <version>
     <release>1.0.0</release>
