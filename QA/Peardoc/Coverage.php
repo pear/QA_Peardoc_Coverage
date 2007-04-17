@@ -67,6 +67,7 @@ class QA_Peardoc_Coverage
         'fsm'                       => 'processing',
         'i18nv2'                    => 'internationalization',
         'inline_c'                  => 'php',
+        'math_numbers'              => 'numbers',
         'message'                   => 'encryption',
         'mime_type'                 => 'tools',
         'ole'                       => 'structures',
@@ -127,7 +128,10 @@ class QA_Peardoc_Coverage
     */
     public static $arIgnoredPackages = array(
         'forum',
-        'perm_liveuser'
+        'html_oohform',
+        'installphars',
+        'perm_liveuser',
+        'xml_annotea'
     );
 
 
