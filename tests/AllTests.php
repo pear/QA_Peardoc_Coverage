@@ -1,6 +1,6 @@
 <?php
 if (!defined('PHPUnit_MAIN_METHOD')) {
-    define('PHPUnit_MAIN_METHOD', 'AllTests::main');
+    define('PHPUnit_MAIN_METHOD', 'QA_Peardoc_Coverage_AllTests::main');
     chdir(dirname(__FILE__) . '/../');
 }
 
@@ -14,7 +14,7 @@ require_once 'QA_Peardoc_Coverage_MethodListTest.php';
 require_once 'QA_Peardoc_Coverage_Renderer_DeveloperListTest.php';
 
 
-class AllTests
+class QA_Peardoc_Coverage_AllTests
 {
     public static function main()
     {
@@ -35,7 +35,7 @@ class AllTests
     }
 }
 
-if (PHPUnit_MAIN_METHOD == 'AllTests::main') {
-    AllTests::main();
+if (PHPUnit_MAIN_METHOD == 'QA_Peardoc_Coverage_AllTests::main') {
+    QA_Peardoc_Coverage_AllTests::main();
 }
 ?>
