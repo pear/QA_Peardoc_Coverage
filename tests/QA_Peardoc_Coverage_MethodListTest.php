@@ -7,9 +7,8 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
 require_once "PHPUnit/Framework/TestCase.php";
 require_once "PHPUnit/Framework/TestSuite.php";
 
-// You may remove the following line when all tests have been implemented.
-require_once "PHPUnit/Framework/IncompleteTestError.php";
-
+//make cvs testing work
+chdir(dirname(__FILE__) . '/../');
 require_once "QA/Peardoc/Coverage/MethodList.php";
 require_once dirname(__FILE__) . '/config.php';
 

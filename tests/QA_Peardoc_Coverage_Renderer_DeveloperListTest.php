@@ -7,9 +7,8 @@ if (!defined("PHPUnit_MAIN_METHOD")) {
 require_once "PHPUnit/Framework/TestCase.php";
 require_once "PHPUnit/Framework/TestSuite.php";
 
-// You may remove the following line when all tests have been implemented.
-require_once "PHPUnit/Framework/IncompleteTestError.php";
-
+//make cvs testing work
+chdir(dirname(__FILE__) . '/../');
 require_once "QA/Peardoc/Coverage/Renderer/DeveloperList.php";
 require_once dirname(__FILE__) . '/config.php';
 
@@ -64,7 +63,12 @@ class QA_Peardoc_Coverage_Renderer_DeveloperListTest extends PHPUnit_Framework_T
      *
      */
     public function testGetMaintainers() {
-        $this->assertTrue(file_exists('doc.dat'));
+        if (!file_exists('doc.dat')) {
+            $this->markTestSkipped(
+                'No generated doc.dat available for testing.'
+            );
+            return;
+        }
         $ar = QA_Peardoc_Coverage_Renderer_DeveloperList::getMaintainers(
             unserialize(
                 file_get_contents('doc.dat')
@@ -91,29 +95,21 @@ class QA_Peardoc_Coverage_Renderer_DeveloperListTest extends PHPUnit_Framework_T
     public function testGetPackageMaintainers() {
         //test package.xml v1
         $ar = QA_Peardoc_Coverage_Renderer_DeveloperList::getPackageMaintainers(
-            $this->strPearDir . '/File/package.xml'
+            dirname(__FILE__) . '/package-v1.xml'
         );
-
-        $this->assertEquals(5, count($ar));
-        $this->assertTrue(isset($ar['richard']));
-        $this->assertTrue(isset($ar['tal']));
+        $this->assertEquals(2, count($ar));
+        $this->assertTrue(isset($ar['cipri']));
         $this->assertTrue(isset($ar['dufuz']));
 
         //no version info
         $ar = QA_Peardoc_Coverage_Renderer_DeveloperList::getPackageMaintainers(
-            $this->strPearDir . '/DBA/package.xml'
+            dirname(__FILE__) . '/package-noversion.xml'
         );
         $this->assertEquals(1, count($ar));
 
         //test package.xml v2
         $ar = QA_Peardoc_Coverage_Renderer_DeveloperList::getPackageMaintainers(
-            $this->strPearDir . '/Auth/package2.xml'
-        );
-        $this->assertEquals(2, count($ar));
-
-        //HTML_Menu didn't work
-        $ar = QA_Peardoc_Coverage_Renderer_DeveloperList::getPackageMaintainers(
-            $this->strPearDir . '/HTML_Menu/package.xml'
+            dirname(__FILE__) . '/package-v2.xml'
         );
         $this->assertEquals(2, count($ar));
     }
