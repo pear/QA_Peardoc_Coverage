@@ -24,7 +24,7 @@ class QA_Peardoc_Coverage_AllTests
 
     public static function suite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('QA_Peardoc_CoverageTest');
+        $suite = new PHPUnit_Framework_TestSuite('QA_Peardoc_Coverage Tests');
         /** Add testsuites, if there is. */
         $suite->addTestSuite('QA_Peardoc_CoverageTest');
         $suite->addTestSuite('QA_Peardoc_Coverage_ClassListTest');
