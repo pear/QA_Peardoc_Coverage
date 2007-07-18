@@ -77,7 +77,7 @@ class QA_Peardoc_Coverage_Renderer_DeveloperListTest extends PHPUnit_Framework_T
 
         $this->assertTrue(isset($ar['cweiske']));
         $this->assertTrue(10 <= count($ar['cweiske']['packagelist']));
-        $this->assertTrue(5 <= $ar['cweiske']['docced']);
+        $this->assertTrue(5  <= $ar['cweiske']['docced']);
         $this->assertTrue(10 <= $ar['cweiske']['packages']);
         $this->assertEquals(
             count($ar['cweiske']['packagelist']),

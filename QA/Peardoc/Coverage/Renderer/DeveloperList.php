@@ -2,12 +2,18 @@
 require_once 'QA/Peardoc/Coverage/Renderer.php';
 
 /**
-*   Renders a list with developers, the number of packages
-*   they maintain and the documented/undocumented ratio
+* Renders a list with developers, the number of packages
+* they maintain and the documented/undocumented ratio
 *
-*   @author Christian Weiske <cweisek@php.net>
+* @category QA
+* @package  QA_Peardoc_Coverage
+* @author   Christian Weiske <cweiske@php.net>
+* @license  http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
+* @version  CVS: $Id$
+* @link     http://pear.php.net/package/QA_Peardoc_Coverage
 */
-class QA_Peardoc_Coverage_Renderer_DeveloperList implements QA_Peardoc_Coverage_Renderer
+class QA_Peardoc_Coverage_Renderer_DeveloperList
+    implements QA_Peardoc_Coverage_Renderer
 {
     public static $colNotDocumented = '#F00';
     public static $colDocumented    = '#0F0';
@@ -21,10 +27,11 @@ class QA_Peardoc_Coverage_Renderer_DeveloperList implements QA_Peardoc_Coverage_
 
 
     /**
-    *   Returns the color code matching the number.
+    * Returns the color code matching the number.
     *
-    *   @param float    $flNumber   Number (x/y), !no! percentage
-    *   @return string  HTML color #0AF
+    * @param float $flNumber Number (x/y), !no! percentage
+    *
+    * @return string HTML color #0AF
     */
     public static function getColor($flNumber)
     {
@@ -44,15 +51,20 @@ class QA_Peardoc_Coverage_Renderer_DeveloperList implements QA_Peardoc_Coverage_
 
 
     /**
-    *   Renders the given coverage array and
-    *   returns the HTML.
+    * Renders the given coverage array and
+    * returns the HTML.
+    *
+    * @param array $arDoc     Documentation coverage analysis results
+    * @param array $arOptions Options
+    *
+    * @return string HTML
     */
     public function render($arDoc, $arOptions = null)
     {
         $arMaintainer = self::getMaintainers($arDoc);
 
-        $n = "\n";
-        $out = '';
+        $n    = "\n";
+        $out  = '';
         $out .= '<?xml version="1.0" encoding="utf-8" ?>' . $n
             . '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" '
             . '"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
@@ -73,9 +85,9 @@ class QA_Peardoc_Coverage_Renderer_DeveloperList implements QA_Peardoc_Coverage_
             . '</tr>'
             . '</thead>' . $n;
 
-        $nPlace = 0;
+        $nPlace      = 0;
         $nNextNumber = 101;
-        $arCounter = array();
+        $arCounter   = array();
         reset(self::$arLevels);
 
         foreach ($arMaintainers as $strUsername => $arMaintainer) {
@@ -141,34 +153,37 @@ class QA_Peardoc_Coverage_Renderer_DeveloperList implements QA_Peardoc_Coverage_
 
 
         $out .= '</body></html>';
-//return '';
+
         return $out;
     }//public function render($arDoc)
 
 
 
     /**
-    *   Returns an array of package maintainer usernames,
-    *   their email address, real name and the packages
-    *   maintained by them. Also lists which packages are
-    *   not docced, and which are.
+    * Returns an array of package maintainer usernames,
+    * their email address, real name and the packages
+    * maintained by them. Also lists which packages are
+    * not docced, and which are.
     *
-    *   @param array $arDoc     Array as passed to render() method.
-    *   @return array   Array with the following data:
-    *   [username] => array(
-    *       [name]      => Real name
-    *       [email]     => Email address
-    *       [docced]    => # of documented packages
-    *       [packages]  => # of packages at all
-    *       [packagelist]   => array with package names (key)
-    *                       value is reference to doc array
-    *   )
+    * @param array $arDoc Array as passed to render() method.
+    *
+    * @return array   Array with the following data:
+    * [username] => array(
+    *     [name]      => Real name
+    *     [email]     => Email address
+    *     [docced]    => # of documented packages
+    *     [packages]  => # of packages at all
+    *     [packagelist]   => array with package names (key)
+    *                     value is reference to doc array
+    * )
     */
     public static function getMaintainers($arDoc)
     {
         $arMaintainers = array();
         foreach ($arDoc as $strCategory => &$arPackages) {
-            if ($strCategory[0] == '*') { continue; }
+            if ($strCategory[0] == '*') {
+                continue;
+            }
 
             foreach ($arPackages as $strPackageName => &$arPackage) {
                 $strPath = $arPackage['*package*'];
@@ -208,15 +223,16 @@ class QA_Peardoc_Coverage_Renderer_DeveloperList implements QA_Peardoc_Coverage_
 
 
     /**
-    *   Reads the package maintainers from a package.xml (v1 and v2)
-    *   file.
+    * Reads the package maintainers from a package.xml (v1 and v2)
+    * file.
     *
-    *   @param string $strPackageXmlPath    Path to a package.xml file
-    *   @return array   Array with maintainers of following structure:
-    *   [username] => array(
-    *       [name]      => Real name
-    *       [email]     => Email address
-    *   )
+    * @param string $strPackageXmlPath Path to a package.xml file
+    *
+    * @return array Array with maintainers of following structure:
+    * [username] => array(
+    *     [name]      => Real name
+    *     [email]     => Email address
+    * )
     */
     public static function getPackageMaintainers($strPackageXmlPath)
     {
@@ -233,7 +249,7 @@ class QA_Peardoc_Coverage_Renderer_DeveloperList implements QA_Peardoc_Coverage_
 
         $arMaintainers = array();
 
-        $pack = $doc->getElementsByTagName('package')->item(0);
+        $pack       = $doc->getElementsByTagName('package')->item(0);
         $strVersion = $pack->getAttribute('version');
 
         if ($strVersion == '') {
@@ -241,8 +257,10 @@ class QA_Peardoc_Coverage_Renderer_DeveloperList implements QA_Peardoc_Coverage_
         }
 
         if ($strVersion != '1.0' && $strVersion != '2.0') {
-            throw new Exception('Unsupported package.xml version ' . $strVersion
-                . ' in ' . $strPackageXmlPath);
+            throw new Exception(
+                'Unsupported package.xml version ' . $strVersion
+                . ' in ' . $strPackageXmlPath
+            );
         }
 
         if ($strVersion == '1.0') {
@@ -295,6 +313,14 @@ class QA_Peardoc_Coverage_Renderer_DeveloperList implements QA_Peardoc_Coverage_
 
 
 
+    /**
+    * Compares two maintainer arrays for sorting
+    *
+    * @param array $m1 Maintainer 1
+    * @param array $m2 Maintainer 2
+    *
+    * @return int -1,0,1 depending on sort results
+    */
     public static function compareMaintainers($m1, $m2)
     {
         $v1 = $m1['docced'] / $m1['packages'];
@@ -305,5 +331,5 @@ class QA_Peardoc_Coverage_Renderer_DeveloperList implements QA_Peardoc_Coverage_
         return ($v1 > $v2) ? -1 : 1;
     }//public static function compareMaintainers($m1, $m2)
 
-}//class QA_Peardoc_Coverage_Renderer_DeveloperList implements QA_Peardoc_Coverage_Renderer
+}//class QA_Peardoc_Coverage_Renderer_DeveloperList
 ?>

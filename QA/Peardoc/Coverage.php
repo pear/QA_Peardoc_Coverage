@@ -49,7 +49,12 @@ require_once 'QA/Peardoc/Coverage/MethodList.php';
 * - differentiate between stable and unstable packages
 *   (read package.xml)
 *
-* @author Christian Weiske <cweiske@php.net>
+* @category QA
+* @package  QA_Peardoc_Coverage
+* @author   Christian Weiske <cweiske@php.net>
+* @license  http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
+* @version  CVS: $Id$
+* @link     http://pear.php.net/package/QA_Peardoc_Coverage
 */
 class QA_Peardoc_Coverage
 {
@@ -139,8 +144,9 @@ class QA_Peardoc_Coverage
     /**
     * Creates a new coverage checker instance.
     *
-    * @param string $strManualPath    Full path to the manual.xml file
-    *                                    of the pear documentation.
+    * @param string $strManualPath Full path to the manual.xml file
+    *                               of the pear documentation.
+    * @param string $strPearDir    Path of PEAR CVS checkout directory
     */
     public function __construct($strManualPath, $strPearDir)
     {
@@ -228,7 +234,8 @@ class QA_Peardoc_Coverage
         $arCoverage,
         $strRenderer = 'QA_Peardoc_Coverage_Renderer_SimplePackageList',
         $arOptions = null
-    ) {
+    )
+    {
         if (!class_exists($strRenderer)) {
             require_once str_replace('_', '/', $strRenderer) . '.php';
         }
@@ -257,8 +264,8 @@ class QA_Peardoc_Coverage
         $strPath = getcwd();
         chdir(dirname($strManualPath));
 
-        $this->doc = new DOMDocument();
-        $this->doc->resolveExternals = true;
+        $this->doc                     = new DOMDocument();
+        $this->doc->resolveExternals   = true;
         $this->doc->substituteEntities = true;
         if ($this->doc->load($strManualPath)) {
             $this->xpath = new DOMXPath($this->doc);
@@ -290,6 +297,7 @@ class QA_Peardoc_Coverage
             as $strPackageFilePath
         ) {
             $strPackageDir = substr($strPackageFilePath, 0, strrpos($strPackageFilePath, '/'));
+
             $arPackages[$strPackageDir] = basename($strPackageDir);
         }
 
@@ -347,9 +355,9 @@ class QA_Peardoc_Coverage
     */
     public function getPackageDocId($strPackage, $strCategory)
     {
-        $strCategory       = strtolower($strCategory);
+        $strCategory = strtolower($strCategory);
         //gtk2-entrydialog
-        $strPackageIdName  = strtolower(str_replace('_', '-', $strPackage));
+        $strPackageIdName = strtolower(str_replace('_', '-', $strPackage));
         //entrydialog
         $strPackageIdName2 = strtolower(str_replace('_', '-',
                                     substr(

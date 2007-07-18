@@ -1,14 +1,19 @@
 <?php
 
 /**
-*   Class and method list for a given package directory.
+* Class and method list for a given package directory.
 *
-*   Don't list:
-*   - doc|docs directory
-*   - examples
-*   - test|tests
+* Don't list:
+* - doc|docs directory
+* - examples
+* - test|tests
 *
-*   @author Christian Weiske <cweiske@php.net>
+* @category QA
+* @package  QA_Peardoc_Coverage
+* @author   Christian Weiske <cweiske@php.net>
+* @license  http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
+* @version  CVS: $Id$
+* @link     http://pear.php.net/package/QA_Peardoc_Coverage
 */
 class QA_Peardoc_Coverage_Classlist
 {
@@ -42,7 +47,7 @@ class QA_Peardoc_Coverage_Classlist
         '/package_.+.php',
         '/test.+.php',
         '/updatePear.php',
-/*
+        /*
         '/DBA_Relational/Toolbox.php',
         '/DB_DOM/DB_DOM.php',
         '/fix.+Files.php',
@@ -96,23 +101,26 @@ class QA_Peardoc_Coverage_Classlist
         '/PEAR_Frontend_Gtk2/Gtk2/Checks.php',
         '/PHP_Compat/Compat/',
         '/PHP_CompatInfo/CompatInfo/',
-*/
+        */
     );
 
     /**
-    *   Returns a list of .php files in the given
-    *   directory and its subdirectories.
-    *   The files do not match self::$arBadFiles.
+    * Returns a list of .php files in the given
+    * directory and its subdirectories.
+    * The files do not match self::$arBadFiles.
     *
-    *   @param string   $strPackageDir      Directory to scan
-    *   @param boolean  $bAbsolute          Return absolute file paths
-    *                                        (or relative to package dir)
-    *   @return array   Array with absolute file paths
+    * @param string  $strPackageDir Directory to scan
+    * @param boolean $bAbsolute     Return absolute file paths
+    *                                (or relative to package dir)
+    *
+    * @return array Array with absolute file paths
     */
     public static function getFileList($strPackageDir, $bAbsolute = true)
     {
         if (!file_exists($strPackageDir) || !is_dir($strPackageDir)) {
-            throw new Exception("Package directory does not exist: " . $strPackageDir);
+            throw new Exception(
+                "Package directory does not exist: " . $strPackageDir
+            );
         }
 
         if (substr($strPackageDir, -1) != '/') {
@@ -143,17 +151,24 @@ class QA_Peardoc_Coverage_Classlist
 
 
     /**
-    *   Tries to find classnames in a given file
+    * Tries to find classnames in a given file
     *
-    *   @param string $strClassFile     .php filename
-    *   @return array   Array of classnames defined in the file
+    * @param string $strClassFile .php filename
+    *
+    * @return array Array of classnames defined in the file
     */
     public static function getClassnamesFromFilename($strClassFile)
     {
         //simple: open file and search for "class classname"
         $strContent = file_get_contents($strClassFile);
 
-        if (preg_match_all('/' . "(?:\r|\n)" . '\\s*(?:abstract\\s+)?(?:final\\s+)?(?:[Cc]lass|interface)\\s+([A-Za-z0-9_]+)/', $strContent, $arMatches)) {
+        if (preg_match_all(
+                '/' . "(?:\r|\n)"
+                . '\\s*(?:abstract\\s+)?(?:final\\s+)?'
+                . '(?:[Cc]lass|interface)\\s+([A-Za-z0-9_]+)/',
+            $strContent,
+            $arMatches)
+        ) {
             return $arMatches[1];
         } else {
             return array();

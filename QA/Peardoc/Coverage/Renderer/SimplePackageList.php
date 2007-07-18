@@ -2,12 +2,18 @@
 require_once 'QA/Peardoc/Coverage/Renderer.php';
 
 /**
-*   Renders the coverage result in a simple
-*   list of packages with their documentation state.
+* Renders the coverage result in a simple
+* list of packages with their documentation state.
 *
-*   @author Christian Weiske <cweisek@php.net>
+* @category QA
+* @package  QA_Peardoc_Coverage
+* @author   Christian Weiske <cweiske@php.net>
+* @license  http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
+* @version  CVS: $Id$
+* @link     http://pear.php.net/package/QA_Peardoc_Coverage
 */
-class QA_Peardoc_Coverage_Renderer_SimplePackageList implements QA_Peardoc_Coverage_Renderer
+class QA_Peardoc_Coverage_Renderer_SimplePackageList
+    implements QA_Peardoc_Coverage_Renderer
 {
     public static $colNotDocumented = '#F00';
     public static $colDocumented    = '#0F0';
@@ -15,10 +21,11 @@ class QA_Peardoc_Coverage_Renderer_SimplePackageList implements QA_Peardoc_Cover
 
 
     /**
-    *   Returns the color code matching the number.
+    * Returns the color code matching the number.
     *
-    *   @param float    $flNumber   Number (x/y), !no! percentage
-    *   @return string  HTML color #0AF
+    * @param float $flNumber Number (x/y), !no! percentage
+    *
+    * @return string  HTML color #0AF
     */
     public static function getColor($flNumber)
     {
@@ -38,11 +45,12 @@ class QA_Peardoc_Coverage_Renderer_SimplePackageList implements QA_Peardoc_Cover
 
 
     /**
-    *   Returns the manual url (deep link) for
-    *   the given documentation id.
+    * Returns the manual url (deep link) for
+    * the given documentation id.
     *
-    *   @param string $strDocId     Documentation id=""
-    *   @return string      URL to the manual
+    * @param string $strDocId Documentation id=""
+    *
+    * @return string URL to the manual
     */
     public static function getDocUrl($strDocId)
     {
@@ -53,13 +61,18 @@ class QA_Peardoc_Coverage_Renderer_SimplePackageList implements QA_Peardoc_Cover
 
 
     /**
-    *   Renders the given coverage array and
-    *   returns the HTML.
+    * Renders the given coverage array and
+    * returns the HTML.
+    *
+    * @param array $arDoc     Documentation coverage analysis results
+    * @param array $arOptions Options
+    *
+    * @return string HTML
     */
     public function render($arDoc, $arOptions = null)
     {
-        $n = "\n";
-        $out = '';
+        $n    = "\n";
+        $out  = '';
         $out .= '<?xml version="1.0" encoding="utf-8" ?>' . $n
             . '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" '
             . '"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
@@ -75,7 +88,9 @@ class QA_Peardoc_Coverage_Renderer_SimplePackageList implements QA_Peardoc_Cover
         $nCategories     = 0;
 
         foreach ($arDoc as $strCategory => $arCategoryPackages) {
-            if ($strCategory[0] == '*') { continue; }
+            if ($strCategory[0] == '*') {
+                continue;
+            }
 
             $out .= '<tr><th colspan="3">' . ucfirst($strCategory) . '</th></tr>' . $n;
             ++$nCategories;
@@ -109,7 +124,7 @@ class QA_Peardoc_Coverage_Renderer_SimplePackageList implements QA_Peardoc_Cover
                 $out .= '</tr>' . $n;
             }//foreach package in category
 
-            $col = self::getColor($nCategoryDoccedPackages/$nCategoryPackages);
+            $col  = self::getColor($nCategoryDoccedPackages/$nCategoryPackages);
             $out .= '<tr>'
                     . '<td>Sum</td>'
                     . '<td>' . $nCategoryPackages . '</td>'
@@ -118,7 +133,7 @@ class QA_Peardoc_Coverage_Renderer_SimplePackageList implements QA_Peardoc_Cover
                     . '</tr>' . $n;
         }//foreach category
 
-        $col = self::getColor($nDoccedPackages/$nPackages);
+        $col  = self::getColor($nDoccedPackages/$nPackages);
         $out .= '<tr style="font-weight:bold; background-color:' . $col . '">'
               . '<td rowspan="2">All in all</td>'
               . '<td rowspan="2">' . $nCategories . ' categories</td>'
@@ -135,5 +150,5 @@ class QA_Peardoc_Coverage_Renderer_SimplePackageList implements QA_Peardoc_Cover
         return $out;
     }//public function render($arDoc)
 
-}//class QA_Peardoc_Coverage_Renderer_SimplePackageList implements QA_Peardoc_Coverage_Renderer
+}//class QA_Peardoc_Coverage_Renderer_SimplePackageList
 ?>

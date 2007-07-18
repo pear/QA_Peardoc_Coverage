@@ -2,13 +2,19 @@
 require_once 'QA/Peardoc/Coverage/Renderer.php';
 
 /**
-*   Renders the coverage result in an extendet
-*   list of packages with its documented state,
-*   and the classes with their methods.
+* Renders the coverage result in an extendet
+* list of packages with its documented state,
+* and the classes with their methods.
 *
-*   @author Christian Weiske <cweisek@php.net>
+* @category QA
+* @package  QA_Peardoc_Coverage
+* @author   Christian Weiske <cweiske@php.net>
+* @license  http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
+* @version  CVS: $Id$
+* @link     http://pear.php.net/package/QA_Peardoc_Coverage
 */
-class QA_Peardoc_Coverage_Renderer_ExtendetPackageList implements QA_Peardoc_Coverage_Renderer
+class QA_Peardoc_Coverage_Renderer_ExtendetPackageList
+    implements QA_Peardoc_Coverage_Renderer
 {
     public static $colNotDocumented = '#F00';
     public static $colDocumented    = '#0F0';
@@ -20,10 +26,11 @@ class QA_Peardoc_Coverage_Renderer_ExtendetPackageList implements QA_Peardoc_Cov
 
 
     /**
-    *   Returns the color code matching the number.
+    * Returns the color code matching the number.
     *
-    *   @param float    $flNumber   Number (x/y), !no! percentage
-    *   @return string  HTML color #0AF
+    * @param float $flNumber Number (x/y), !no! percentage
+    *
+    * @return string HTML color #0AF
     */
     public static function getColor($flNumber)
     {
@@ -43,11 +50,12 @@ class QA_Peardoc_Coverage_Renderer_ExtendetPackageList implements QA_Peardoc_Cov
 
 
     /**
-    *   Returns the manual url (deep link) for
-    *   the given documentation id.
+    * Returns the manual url (deep link) for
+    * the given documentation id.
     *
-    *   @param string $strDocId     Documentation id=""
-    *   @return string      URL to the manual
+    * @param string $strDocId Documentation id=""
+    *
+    * @return string URL to the manual
     */
     public static function getDocUrl($strDocId)
     {
@@ -58,13 +66,18 @@ class QA_Peardoc_Coverage_Renderer_ExtendetPackageList implements QA_Peardoc_Cov
 
 
     /**
-    *   Renders the given coverage array and
-    *   returns the HTML.
+    * Renders the given coverage array and
+    * returns the HTML.
+    *
+    * @param array $arDoc     Documentation coverage analysis results
+    * @param array $arOptions Options
+    *
+    * @return string HTML
     */
     public function render($arDoc, $arOptions = null)
     {
-        $n = "\n";
-        $out = '';
+        $n    = "\n";
+        $out  = '';
         $out .= '<?xml version="1.0" encoding="utf-8" ?>' . $n
             . '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" '
             . '"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
@@ -84,7 +97,9 @@ class QA_Peardoc_Coverage_Renderer_ExtendetPackageList implements QA_Peardoc_Cov
         //Package name|Class name|methods|number/percent
 
         foreach ($arDoc as $strCategory => $arCategoryPackages) {
-            if ($strCategory[0] == '*') { continue; }
+            if ($strCategory[0] == '*') {
+                continue;
+            }
 
             $out .= '<tr><th colspan="3">' . ucfirst($strCategory) . '</th></tr>' . $n;
             ++$nCategories;
@@ -117,17 +132,17 @@ class QA_Peardoc_Coverage_Renderer_ExtendetPackageList implements QA_Peardoc_Cov
                     $out .= self::getMethodDocState($arPackageCoverage);
                 }
             }//foreach package in category
-/*
+            /*
             $col = self::getColor($nCategoryDoccedPackages/$nCategoryPackages);
             $out .= '<tr>'
                     . '<td>' . $nCategoryPackages . '</td>'
                     . '<td style="text-align:right; font-weight:bold; background-color:' . $col . '">'
                         . $nCategoryDoccedPackages . '/' . $nCategoryPackages . '</td>'
                     . '</tr>' . $n;
-*/
+            */
         }//foreach category
 
-        $col = self::getColor($nDoccedPackages/$nPackages);
+        $col  = self::getColor($nDoccedPackages/$nPackages);
         $out .= '<tr style="font-weight:bold; background-color:' . $col . '">'
               . '<td rowspan="2">' . $nCategories . ' categories</td>'
               . '<td style="text-align:right;">Packages documented: ' . $nDoccedPackages . '/' . $nPackages . '</td>'
@@ -146,18 +161,20 @@ class QA_Peardoc_Coverage_Renderer_ExtendetPackageList implements QA_Peardoc_Cov
 
 
     /**
-    *   Generates the class/method coverage html
+    * Generates the class/method coverage html
     *
-    *   @return string  class and method coverage HTML
+    * @return string Class and method coverage HTML
     */
     public static function getMethodDocState($arPackageCoverage)
     {
-        $n = "\n";
-        $out = '';
+        $n              = "\n";
+        $out            = '';
         $nClasses       = 0;
         $nClassesDocced = 0;
         foreach ($arPackageCoverage as $strClass => $arMethods) {
-            if ($strClass[0] == '*') { continue; }
+            if ($strClass[0] == '*') {
+                continue;
+            }
             ++$nClasses;
 
             if ($arMethods === null) {
@@ -173,7 +190,9 @@ class QA_Peardoc_Coverage_Renderer_ExtendetPackageList implements QA_Peardoc_Cov
             $strDocced      = '';
             $strNotDocced   = '';
             foreach ($arMethods as $strMethod => $bDocumented) {
-                if ($strMethod[0] == '_') { continue; }
+                if ($strMethod[0] == '_') {
+                    continue;
+                }
 
                 ++$nMethods;
                 if ($bDocumented) {
@@ -222,5 +241,5 @@ class QA_Peardoc_Coverage_Renderer_ExtendetPackageList implements QA_Peardoc_Cov
         return $out;
     }//public static function getMethodDocState($arPackageCoverage)
 
-}//class QA_Peardoc_Coverage_Renderer_ExtendetPackageList implements QA_Peardoc_Coverage_Renderer
+}//class QA_Peardoc_Coverage_Renderer_ExtendetPackageList
 ?>

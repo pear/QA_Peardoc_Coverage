@@ -5,7 +5,12 @@ require_once 'QA/Peardoc/Coverage/Renderer.php';
 * Puts the coverage result into the PEAR_QA_CI StatusOverview
 * database.
 *
-* @author Christian Weiske <cweisek@php.net>
+* @category QA
+* @package  QA_Peardoc_Coverage
+* @author   Christian Weiske <cweiske@php.net>
+* @license  http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
+* @version  CVS: $Id$
+* @link     http://pear.php.net/package/QA_Peardoc_Coverage
 */
 class QA_Peardoc_Coverage_Renderer_StatusOverview
     implements QA_Peardoc_Coverage_Renderer
@@ -33,7 +38,9 @@ class QA_Peardoc_Coverage_Renderer_StatusOverview
         $so->registerCategory('doc');
 
         foreach ($arDoc as $strCategory => $arCategoryPackages) {
-            if ($strCategory[0] == '*') { continue; }
+            if ($strCategory[0] == '*') {
+                continue;
+            }
 
             foreach ($arCategoryPackages as $strPackageName => $arPackageCoverage) {
                 //in case there is no error :)
@@ -74,7 +81,9 @@ class QA_Peardoc_Coverage_Renderer_StatusOverview
     public static function getMethodDocState($strPackageName, $arPackageCoverage, $so)
     {
         foreach ($arPackageCoverage as $strClass => $arMethods) {
-            if ($strClass[0] == '*') { continue; }
+            if ($strClass[0] == '*') {
+                continue;
+            }
 
             if ($arMethods === null) {
                 //FIXME: display not docced
@@ -87,7 +96,9 @@ class QA_Peardoc_Coverage_Renderer_StatusOverview
             }
 
             foreach ($arMethods as $strMethod => $bDocumented) {
-                if ($strMethod[0] == '_') { continue; }
+                if ($strMethod[0] == '_') {
+                    continue;
+                }
 
                 if (!$bDocumented) {
                     $so->addWarning(
