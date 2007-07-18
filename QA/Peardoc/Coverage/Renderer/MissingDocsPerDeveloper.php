@@ -20,7 +20,7 @@ class QA_Peardoc_Coverage_Renderer_MissingDocsPerDeveloper implements QA_Peardoc
     *   Renders the given coverage array and
     *   returns the HTML.
     */
-    public function render($arDoc)
+    public function render($arDoc, $arOptions = null)
     {
         $arMaintainers = QA_Peardoc_Coverage_Renderer_DeveloperList::getMaintainers($arDoc);
         $arList = array();

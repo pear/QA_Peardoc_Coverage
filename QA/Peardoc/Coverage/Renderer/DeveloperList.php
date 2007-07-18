@@ -47,7 +47,7 @@ class QA_Peardoc_Coverage_Renderer_DeveloperList implements QA_Peardoc_Coverage_
     *   Renders the given coverage array and
     *   returns the HTML.
     */
-    public function render($arDoc)
+    public function render($arDoc, $arOptions = null)
     {
         $arMaintainer = self::getMaintainers($arDoc);
 

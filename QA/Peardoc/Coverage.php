@@ -12,52 +12,52 @@ require_once 'QA/Peardoc/Coverage/MethodList.php';
 */
 
 /**
-*   Simple peardoc coverage analysis.
-*   Compares the classes and methods in PEAR packages
-*   with the PEAR documentation, trying to find
-*   out which packages aren't documented at all,
-*   where documentation of parts is lacking or
-*   which packages are fully documented.
+* Simple peardoc coverage analysis.
+* Compares the classes and methods in PEAR packages
+* with the PEAR documentation, trying to find
+* out which packages aren't documented at all,
+* where documentation of parts is lacking or
+* which packages are fully documented.
 *
-*   IDs in peardoc:
-*   ---------------
-*   $packagename has "_" replaced with "-"
+* IDs in peardoc:
+* ---------------
+* $packagename has "_" replaced with "-"
 *
-*   = Class:
-*   package.$category.$packagename
-*       package.html.html-form
-*   package.$category.$shortpackagename
-*       package.gtk.filedrop
+* = Class:
+* package.$category.$packagename
+*     package.html.html-form
+* package.$category.$shortpackagename
+*     package.gtk.filedrop
 *
-*   = Methods:
-*   package.$category.$packagename.$methodname
-*       package.html.html-template-it.show
-*       package.html.html-template-it.show.desc
-*       package.html.html-template-it.show.parameter
-*       package.html.html-template-it.show.throws
-*   package.$category.$packagename.$classname.$methodname
-*       package.html.html-quickform.html-quickform.addelement
+* = Methods:
+* package.$category.$packagename.$methodname
+*     package.html.html-template-it.show
+*     package.html.html-template-it.show.desc
+*     package.html.html-template-it.show.parameter
+*     package.html.html-template-it.show.throws
+* package.$category.$packagename.$classname.$methodname
+*     package.html.html-quickform.html-quickform.addelement
 *
-*   = Constructor:
-*   package.$category.$packagename.constructor
-*       package.gtk2.entrydialog.constructor
-*   package.$category.$packagename.$classname.$classname
-*       package.datetime.calendar.calendar-day.calendar-day
+* = Constructor:
+* package.$category.$packagename.constructor
+*     package.gtk2.entrydialog.constructor
+* package.$category.$packagename.$classname.$classname
+*     package.datetime.calendar.calendar-day.calendar-day
 *
 *
-*   TODO:
-*   - differentiate between stable and unstable packages
-*       (read package.xml)
+* @todo:
+* - differentiate between stable and unstable packages
+*   (read package.xml)
 *
-*   @author Christian Weiske <cweiske@php.net>
+* @author Christian Weiske <cweiske@php.net>
 */
 class QA_Peardoc_Coverage
 {
     /**
-    *   Special category associations.
+    * Special category associations.
     *
-    *   key: package name
-    *   value: category name
+    * key: package name
+    * value: category name
     */
     public static $arCategoryAssociation = array(
         'benchmark'                 => 'benchmarking',
@@ -89,12 +89,12 @@ class QA_Peardoc_Coverage
     );
 
     /**
-    *   List with package category name => Doc category name
-    *   associations.
+    * List with package category name => Doc category name
+    * associations.
     *
-    *   Doc category assignments may be arrays of strings.
+    * Doc category assignments may be arrays of strings.
     *
-    *   @var array
+    * @var array
     */
     public static $arCategoryDocNames = array(
         'archive'       => 'fileformats',
@@ -123,8 +123,8 @@ class QA_Peardoc_Coverage
     );
 
     /**
-    *   Lowercase package names that should be ignored.
-    *   @var array
+    * Lowercase package names that should be ignored.
+    * @var array
     */
     public static $arIgnoredPackages = array(
         'forum',
@@ -137,9 +137,9 @@ class QA_Peardoc_Coverage
 
 
     /**
-    *   Creates a new coverage checker instance.
+    * Creates a new coverage checker instance.
     *
-    *   @param string $strManualPath    Full path to the manual.xml file
+    * @param string $strManualPath    Full path to the manual.xml file
     *                                    of the pear documentation.
     */
     public function __construct($strManualPath, $strPearDir)
@@ -151,9 +151,9 @@ class QA_Peardoc_Coverage
 
 
     /**
-    *   Generates the coverage analysis
+    * Generates the coverage analysis
     *
-    *   @return array   Documentation coverage array. Pass it to a render() method.
+    * @return array   Documentation coverage array. Pass it to a render() method.
     */
     public function generateCoverage()
     {
@@ -216,16 +216,18 @@ class QA_Peardoc_Coverage
 
 
     /**
-    *   Renders the coverage analysis into a viewable format.
+    * Renders the coverage analysis into a viewable format.
     *
-    *   @param array $arCoverage    Coverage analysis array from generateCoverage()
-    *   @param string $strRenderer  Classname of the renderer
+    * @param array  $arCoverage  Coverage analysis array from generateCoverage()
+    * @param string $strRenderer Classname of the renderer
+    * @param array  $arOptions   Array of options if needed
     *
-    *   @return string  Viewable coverage analysis.
+    * @return string  Viewable coverage analysis.
     */
     public static function renderCoverage(
         $arCoverage,
-        $strRenderer = 'QA_Peardoc_Coverage_Renderer_SimplePackageList'
+        $strRenderer = 'QA_Peardoc_Coverage_Renderer_SimplePackageList',
+        $arOptions = null
     ) {
         if (!class_exists($strRenderer)) {
             require_once str_replace('_', '/', $strRenderer) . '.php';
@@ -233,18 +235,19 @@ class QA_Peardoc_Coverage
 
         return call_user_func(
             array($strRenderer, 'render'),
-            $arCoverage
+            $arCoverage,
+            $arOptions
         );
     }//public static function renderCoverage(..)
 
 
 
     /**
-    *   Loads the given xml file into a DOM document.
+    * Loads the given xml file into a DOM document.
     *
-    *   @param string $strManualPath    Full path to the manual.xml file
-    *                                    of the pear documentation.
-    *   @return boolean true if all is ok.
+    * @param string $strManualPath Full path to the manual.xml file
+    *                               of the pear documentation.
+    * @return boolean true if all is ok.
     */
     protected function loadXmlDocument($strManualPath)
     {
@@ -270,10 +273,10 @@ class QA_Peardoc_Coverage
 
 
     /**
-    *   Returns a list of packages and their paths
+    * Returns a list of packages and their paths
     *
-    *   @param string $strPearDir   PEAR CVS directory
-    *   @return array   Array with package dir as key and package name as value
+    * @param string $strPearDir PEAR CVS directory
+    * @return array Array with package dir as key and package name as value
     */
     public static function getPackageList($strPearDir)
     {
@@ -297,10 +300,11 @@ class QA_Peardoc_Coverage
 
 
     /**
-    *   Returns the category name for the package.
+    * Returns the category name for the package.
     *
-    *   @param string $strPackage   Package name (e.g. Gtk2_EntryDialog)
-    *   @return string              Array with category names (lowercase)
+    * @param string $strPackage Package name (e.g. Gtk2_EntryDialog)
+    *
+    * @return string Array with category names (lowercase)
     */
     public static function getCategory($strPackage)
     {
@@ -333,13 +337,13 @@ class QA_Peardoc_Coverage
 
 
     /**
-    *   Returns the ID of the XML node of the package
-    *   in the pear documentation.
+    * Returns the ID of the XML node of the package
+    * in the pear documentation.
     *
-    *   @param string $strPackage   Package name
-    *   @param string $strCategory  Category name, gotten from self::getCategory()
+    * @param string $strPackage  Package name
+    * @param string $strCategory Category name, gotten from self::getCategory()
     *
-    *   @return string  The id, or NULL if not found -> not documented.
+    * @return string The id, or NULL if not found -> not documented.
     */
     public function getPackageDocId($strPackage, $strCategory)
     {
@@ -357,7 +361,7 @@ class QA_Peardoc_Coverage
         $strId  = 'package.' . $strCategory . '.' . $strPackageIdName;
         $strId2 = 'package.' . $strCategory . '.' . $strPackageIdName2;
         $strId3 = 'core.'    . $strCategory . '.' . $strPackageIdName;
-//echo $strId . "|" . $strId2 . "|" . $strId3 . "\n";
+        //echo $strId . "|" . $strId2 . "|" . $strId3 . "\n";
 
         if ($this->existsId($strId)) {
             return $strId;
@@ -373,10 +377,11 @@ class QA_Peardoc_Coverage
 
 
     /**
-    *   Checks if an id exists in the manual
+    * Checks if an id exists in the manual
     *
-    *   @param string $strId    xml id="" to check
-    *   @return boolean     True if it exists, false if not
+    * @param string $strId XML id="" to check
+    *
+    * @return boolean True if it exists, false if not
     */
     public function existsId($strId)
     {
@@ -387,23 +392,23 @@ class QA_Peardoc_Coverage
 
 
     /**
-    *   Creates the documentation coverage for the given package.
+    * Creates the documentation coverage for the given package.
     *
-    *   A class is considered documented if either an ID
-    *   /baseid + "." + classname/ exists, or the classname
-    *   is surrounded by <classname> tags at least once.
+    * A class is considered documented if either an ID
+    * /baseid + "." + classname/ exists, or the classname
+    * is surrounded by <classname> tags at least once.
     *
-    *   Functions/methds are considered as documented if
-    *   they are mentioned inside a <function> tag or
-    *   an id like /baseid + "." + classname + "." + functionname/
-    *   exists.
+    * Functions/methds are considered as documented if
+    * they are mentioned inside a <function> tag or
+    * an id like /baseid + "." + classname + "." + functionname/
+    * exists.
     *
-    *   @param string   $strPackage     Package name
-    *   @param string   $strCategory    Category (lowercase)
-    *   @param string   $strBaseId      Base documentation id attribute
-    *   @param string   $strPackageDir  Package directory
+    * @param string $strPackage    Package name
+    * @param string $strCategory   Category (lowercase)
+    * @param string $strBaseId     Base documentation id attribute
+    * @param string $strPackageDir Package directory
     *
-    *   @return array   Array with doc coverage information
+    * @return array Array with doc coverage information
     */
     public function getPackageCoverage($strPackage, $strCategory, $strBaseId, $strPackageDir)
     {

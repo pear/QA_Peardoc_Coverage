@@ -61,7 +61,7 @@ class QA_Peardoc_Coverage_Renderer_ExtendetPackageList implements QA_Peardoc_Cov
     *   Renders the given coverage array and
     *   returns the HTML.
     */
-    public function render($arDoc)
+    public function render($arDoc, $arOptions = null)
     {
         $n = "\n";
         $out = '';
