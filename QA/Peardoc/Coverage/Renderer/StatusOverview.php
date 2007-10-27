@@ -44,7 +44,8 @@ class QA_Peardoc_Coverage_Renderer_StatusOverview
 
             foreach ($arCategoryPackages as $strPackageName => $arPackageCoverage) {
                 //in case there is no error :)
-                $so->addPackage($strPackageName);
+                $so->registerPackage($strPackageName);
+                $so->registerPackageCategory($strPackageName, 'doc');
 
                 if ($arPackageCoverage['*docid*'] === null) {
                     //not documented
