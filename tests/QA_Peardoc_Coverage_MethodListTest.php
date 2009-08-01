@@ -55,7 +55,10 @@ class QA_Peardoc_Coverage_MethodListTest extends PHPUnit_Framework_TestCase {
      *
      */
     public function testGetMethodsAuth() {
-        $strAuthDir = $this->strPearDir . '/Auth';
+        $strAuthDir = $this->strPearDir . '/Auth/trunk';
+        if (!file_exists($strAuthDir)) {
+            $strAuthDir = $this->strPearDir . '/Auth';
+        }
         $strAuthFile = $strAuthDir . '/Auth.php';
         $this->assertTrue(file_exists($strAuthFile));
 
@@ -70,7 +73,10 @@ class QA_Peardoc_Coverage_MethodListTest extends PHPUnit_Framework_TestCase {
      *
      */
     public function testGetMethodsMDB2() {
-        $strMdb2Dir = $this->strPearDir . '/MDB2';
+        $strMdb2Dir = $this->strPearDir . '/MDB2/trunk';
+        if (!file_exists($strMdb2Dir)) {
+            $strMdb2Dir = $this->strPearDir . '/MDB2'; 
+        }
         $strMdb2File = $strMdb2Dir. '/MDB2.php';
         $this->assertTrue(file_exists($strMdb2File));
 

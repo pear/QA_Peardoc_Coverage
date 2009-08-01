@@ -282,7 +282,7 @@ class QA_Peardoc_Coverage
     /**
     * Returns a list of packages and their paths
     *
-    * @param string $strPearDir PEAR CVS directory
+    * @param string $strPearDir PEAR SVN directory
     * @return array Array with package dir as key and package name as value
     */
     public static function getPackageList($strPearDir)
@@ -293,11 +293,12 @@ class QA_Peardoc_Coverage
             $strPearDir .= '/';
         }
         foreach (
-            glob($strPearDir . '*/packag{e,e2}.xml', GLOB_BRACE)
+            glob($strPearDir . '*/trunk/packag{e,e2}.xml', GLOB_BRACE)
             as $strPackageFilePath
         ) {
-            $strPackageDir = substr($strPackageFilePath, 0, strrpos($strPackageFilePath, '/'));
-
+            $strPackageDir = substr(
+                $strPackageFilePath, 0, strrpos($strPackageFilePath, '/', -15)
+            );
             $arPackages[$strPackageDir] = basename($strPackageDir);
         }
 

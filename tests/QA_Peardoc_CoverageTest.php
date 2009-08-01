@@ -72,7 +72,9 @@ class QA_Peardoc_CoverageTest extends PHPUnit_Framework_TestCase {
      */
     public function testGetPackageList() {
         $ar = QA_Peardoc_Coverage::getPackageList($this->strPearDir);
-        $this->assertTrue(in_array('Auth'               , $ar));
+        $this->assertTrue(
+            in_array('Auth', $ar), 'Auth is not in the package list'
+        );
         $this->assertTrue(in_array('LiveUser'           , $ar));
         $this->assertTrue(in_array('System_Folders'     , $ar));
         $this->assertTrue(in_array('Testing_Selenium'   , $ar));

@@ -55,7 +55,11 @@ class QA_Peardoc_Coverage_ClassListTest extends PHPUnit_Framework_TestCase {
 
     public function testAuth()
     {
-        $strAuthDir = $this->strPearDir . '/Auth';
+        $strAuthDir = $this->strPearDir . '/Auth/trunk';
+        if (!file_exists($strAuthDir)) {
+            //magic trunk-only checkout
+            $strAuthDir = $this->strPearDir . '/Auth';
+        }
         $this->assertTrue(file_exists($strAuthDir));
         $ar = QA_Peardoc_Coverage_ClassList::getFileList($strAuthDir, false);
 
@@ -77,7 +81,11 @@ class QA_Peardoc_Coverage_ClassListTest extends PHPUnit_Framework_TestCase {
 
     public function testMDB2()
     {
-        $strMdb2Dir = $this->strPearDir . '/MDB2';
+        $strMdb2Dir = $this->strPearDir . '/MDB2/trunk';
+        if (!file_exists($strMdb2Dir)) {
+            //magic trunk-only checkout
+            $strMdb2Dir = $this->strPearDir . '/MDB2';
+        }
         $this->assertTrue(file_exists($strMdb2Dir));
         $ar = QA_Peardoc_Coverage_ClassList::getFileList($strMdb2Dir, false);
 
@@ -100,7 +108,11 @@ class QA_Peardoc_Coverage_ClassListTest extends PHPUnit_Framework_TestCase {
 
     public function testNetWifi()
     {
-        $strNetWifiDir = $this->strPearDir . '/Net_Wifi';
+        $strNetWifiDir = $this->strPearDir . '/Net_Wifi/trunk';
+        if (!file_exists($strNetWifiDir)) {
+            //magic trunk-only checkout
+            $strNetWifiDir = $this->strPearDir . '/Net_Wifi';
+        }
         $this->assertTrue(file_exists($strNetWifiDir));
         $ar = QA_Peardoc_Coverage_ClassList::getFileList($strNetWifiDir, false);
 

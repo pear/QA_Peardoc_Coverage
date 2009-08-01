@@ -1,6 +1,6 @@
 <?php
 $GLOBALS['testConfig'] = array(
     'ManualPath' => dirname(__FILE__) . '/../../../peardoc/manual.xml',
-    'PearDir'    => dirname(__FILE__) . '/../../',
+    'PearDir'    => dirname(__FILE__) . '/../../../',
 );
 ?>
