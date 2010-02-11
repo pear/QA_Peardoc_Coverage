@@ -4,7 +4,6 @@ if (!defined('PHPUnit_MAIN_METHOD')) {
     chdir(dirname(__FILE__) . '/../');
 }
 
-require_once 'PHPUnit/Framework/TestSuite.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
 
